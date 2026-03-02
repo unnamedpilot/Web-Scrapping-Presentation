@@ -81,37 +81,35 @@ function crearStickmans(svgText) {
     }
 }
 
-Reveal.on('slidechanged', event => {
-    const bg = document.getElementById('afro-background');
 
-    if (event.currentSlide && event.currentSlide.id === 'afro-bg-slide') {
-        bg.style.display = 'block';
 
-        if (!afroLoaded) {
-            afroLoaded = true;
-            fetch('stick-afro.svg')
-                .then(res => res.text())
-                .then(svgText => crearStickmans(svgText));
-        }
-    } else {
-        bg.style.display = 'none';
-    }
-});
-
-// Mostrar la lluvia también al cargar si la primera slide está activa
 Reveal.on('ready', event => {
-    if (event.currentSlide && event.currentSlide.id === 'afro-bg-slide') {
-        document.getElementById('afro-background').style.display = 'block';
-        if (!afroLoaded) {
-            afroLoaded = true;
-            fetch('stick-afro.svg')
-                .then(res => res.text())
-                .then(svgText => crearStickmans(svgText));
-        }
-        // Disparar la animación del ladrón
-        animarLadron();
+  if (event.currentSlide?.id === 'afro-bg-slide') {
+    document.getElementById('afro-background').style.display = 'block';
+    if (!afroLoaded) {
+      afroLoaded = true;
+      fetch('stick-afro.svg').then(r => r.text()).then(crearStickmans);
     }
+    animarLadron(); // ← también aquí, por si recargas en esa slide
+  }
 });
+
+
+Reveal.on('slidechanged', event => {
+  const bg = document.getElementById('afro-background');
+
+  if (event.currentSlide?.id === 'afro-bg-slide') {
+    bg.style.display = 'block';
+    if (!afroLoaded) {
+      afroLoaded = true;
+      fetch('stick-afro.svg').then(r => r.text()).then(crearStickmans);
+    }
+    animarLadron();
+  } else {
+    bg.style.display = 'none';
+  }
+});
+
 
 // ── Ladrón de letras ──
 let thiefAnimated = false;
