@@ -1,15 +1,28 @@
-const fullscreenButton = document.getElementById('fullscreen-btn');
+const btn = document.getElementById('fullscreen-btn');
+const btnText = document.getElementById('fullscreen-btn-text');
+const btnIcon = document.getElementById('fullscreen-icon');
 
-function toggleFullscreen() {
-  if (!document.fullscreenElement) {
-    // Pon en fullscreen toda la página
-    document.documentElement.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
+function updateBtn() {
+  const active = Boolean(document.fullscreenElement);
+  btnText.textContent = active ? 'Salir' : 'Fullscreen';
+  btnIcon.textContent = active ? '✕' : '⛶';
 }
 
-fullscreenButton.addEventListener('click', toggleFullscreen);
+btn.addEventListener('click', async () => {
+  try {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
+    }
+  } finally {
+    updateBtn();
+  }
+});
+
+document.addEventListener('fullscreenchange', updateBtn);
+updateBtn();
+
 
 
 Reveal.initialize({
