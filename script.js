@@ -1,3 +1,17 @@
+const fullscreenButton = document.getElementById('fullscreen-btn');
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    // Pon en fullscreen toda la página
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+fullscreenButton.addEventListener('click', toggleFullscreen);
+
+
 Reveal.initialize({
     hash: true,
     slideNumber: true,
