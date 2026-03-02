@@ -1,11 +1,11 @@
 const btn = document.getElementById('fullscreen-btn');
-const btnText = document.getElementById('fullscreen-btn-text');
-const btnIcon = document.getElementById('fullscreen-icon');
+const iconExpand   = document.getElementById('icon-expand');
+const iconCompress = document.getElementById('icon-compress');
 
 function updateBtn() {
   const active = Boolean(document.fullscreenElement);
-  btnText.textContent = active ? 'Salir' : 'Fullscreen';
-  btnIcon.textContent = active ? '✕' : '⛶';
+  iconExpand.style.display   = active ? 'none'  : 'block';
+  iconCompress.style.display = active ? 'block' : 'none';
 }
 
 btn.addEventListener('click', async () => {
@@ -25,13 +25,14 @@ updateBtn();
 
 
 
+
 Reveal.initialize({
     hash: true,
     slideNumber: true,
     transition: 'slide',
     plugins: [RevealHighlight],
     width: 1200,
-    height: 700,
+    height: 800,
     margin: 0.1,
     minScale: 0.2,
     maxScale: 2.0

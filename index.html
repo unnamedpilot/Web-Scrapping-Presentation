@@ -12,9 +12,22 @@
 
 <body>
     <button id="fullscreen-btn" type="button" aria-label="Pantalla completa">
-        <span id="fullscreen-icon">⛶</span>
-        <span id="fullscreen-btn-text">Fullscreen</span>
-    </button>
+        <!-- Ícono: entrar fullscreen -->
+        <svg id="icon-expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <polyline points="15 3 21 3 21 9"/>
+            <polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/>
+            <line x1="3" y1="21" x2="10" y2="14"/>
+        </svg>
+        <!-- Ícono: salir fullscreen -->
+        <svg id="icon-compress" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display:none">
+            <polyline points="4 14 10 14 10 20"/>
+            <polyline points="20 10 14 10 14 4"/>
+            <line x1="10" y1="14" x2="3" y2="21"/>
+            <line x1="21" y1="3" x2="14" y2="10"/>
+        </svg>
+     </button>
+
 
     <div id="afro-background"></div>
     <img id="thief-stickman" src="stick-afro.svg" alt="stickman ladrón">
@@ -77,6 +90,39 @@
                 <p style="font-size: 0.8em; margin-top: 2rem; opacity: 0.8;">También: imágenes, fuentes, datos (JSON),
                     etc.</p>
             </section>
+
+            <section>
+                <h2>Sitios Estáticos vs Dinámicos</h2>
+                
+                <div class="comparison">
+                    <!-- Columna 1: Sitio Estático -->
+                    <div class="comparison-item">
+                    <h4>Sitio Estático</h4>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.85;">
+                        Sin comunicación con fuentes de datos externas. Contenido fijo.
+                    </p>
+                    <div style="text-align: center;">
+                        <img src="static/static-meme.jpg" 
+                            alt="Persona sola - sitio estático" 
+                            style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                    </div>
+                    </div>
+
+                    <!-- Columna 2: Sitio Dinámico -->
+                    <div class="comparison-item">
+                    <h4>Sitio Dinámico</h4>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.85;">
+                        Conectado a APIs y bases de datos. Contenido cambia en tiempo real.
+                    </p>
+                    <div style="text-align: center;">
+                        <img src="static/dynamic.png" 
+                            alt="Personas saludándose - sitio dinámico" 
+                            style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                    </div>
+                    </div>
+                </div>
+                </section>
+
 
             <!-- Slide 4: Dos significados de rendering -->
             <section>
