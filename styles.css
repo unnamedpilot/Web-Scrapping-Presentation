@@ -1,0 +1,208 @@
+:root {
+    --r-background-color: #1a1a2e;
+    --r-main-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --r-heading-color: #a855f7;
+    --r-link-color: #a855f7;
+    --r-selection-background-color: #a855f7;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+    color: var(--r-heading-color);
+    text-transform: none;
+}
+
+.reveal ul {
+    list-style-type: none;
+}
+
+.reveal ul li:before {
+    content: "▸ ";
+    color: var(--r-link-color);
+    font-weight: bold;
+    margin-right: 0.5em;
+}
+
+.reveal .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.reveal .comparison-item {
+    background: rgba(168, 85, 247, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid rgba(168, 85, 247, 0.3);
+}
+
+.reveal .comparison-item h4 {
+    color: #a855f7;
+    margin-bottom: 1rem;
+}
+
+.reveal .key-question {
+    background: rgba(168, 85, 247, 0.15);
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 5px solid #a855f7;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 2rem 0;
+}
+
+.reveal table {
+    font-size: 0.8em;
+    margin-top: 1.5rem;
+}
+
+.reveal table th {
+    background: rgba(168, 85, 247, 0.2);
+    color: #a855f7;
+}
+
+.reveal table td {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reveal .flowchart {
+    background: rgba(168, 85, 247, 0.05);
+    padding: 2rem;
+    border-radius: 12px;
+    font-family: monospace;
+    text-align: left;
+    margin: 2rem auto;
+    max-width: 80%;
+}
+
+.reveal .strategy-box {
+    background: rgba(168, 85, 247, 0.1);
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    border-left: 4px solid #a855f7;
+}
+
+.reveal .strategy-box h4 {
+    margin-top: 0;
+    color: #a855f7;
+}
+
+.reveal pre {
+    width: 95%;
+    font-size: 0.55em;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.reveal code {
+    font-family: 'Courier New', monospace;
+}
+
+.emoji-large {
+    font-size: 1.5em;
+}
+
+.checkmark {
+    color: #10b981;
+}
+
+.crossmark {
+    color: #ef4444;
+}
+
+.reveal .three-tests {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.reveal .test-card {
+    background: rgba(168, 85, 247, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid rgba(168, 85, 247, 0.3);
+}
+
+.reveal .test-card h4 {
+    color: #a855f7;
+    margin-bottom: 1rem;
+    font-size: 1.1em;
+}
+
+.reveal .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.reveal .tool-category {
+    background: rgba(168, 85, 247, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.reveal .tool-category h4 {
+    color: #a855f7;
+    margin-bottom: 1rem;
+}
+
+/* ── Lluvia de afros ── */
+#afro-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    display: none;
+}
+
+.falling-afro {
+    position: absolute;
+    height: auto;
+    opacity: 0.75;
+}
+
+/* ── Ladrón de letras ── */
+.thief-letter {
+    display: inline;
+    position: relative;
+    transition: opacity 0.4s ease, transform 0.5s ease;
+}
+
+.thief-letter.letter-space {
+    white-space: pre;
+}
+
+#thief-stickman {
+    position: fixed;
+    width: 80px;
+    bottom: 20%;
+    left: -120px;
+    opacity: 0;
+    filter: invert(1);
+    pointer-events: none;
+    z-index: 10;
+    transform: scaleX(-1);
+    transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        bottom 0.6s ease,
+        opacity 0.3s ease;
+}
+
+#thief-rope {
+    position: fixed;
+    height: 2px;
+    width: 0;
+    background: white;
+    opacity: 0;
+    transform-origin: left center;
+    z-index: 9;
+    pointer-events: none;
+    transition: opacity 0.2s ease, width 0.3s ease;
+}

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraping: Fundamentos y Estrategias</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/blood.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="afro-background"></div>
+    <img id="thief-stickman" src="stick-afro.svg" alt="stickman ladrón">
+    <div id="thief-rope"></div>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Título -->
+            <section id="afro-bg-slide">
+                <h1 id="main-title-container">
+                    <span class="thief-letter" id="letter-0">W</span><span class="thief-letter"
+                        id="letter-1">e</span><span class="thief-letter" id="letter-2">b</span><span
+                        class="thief-letter letter-space" id="letter-3"> </span><span class="thief-letter"
+                        id="letter-4">S</span><span class="thief-letter" id="letter-5">c</span><span
+                        class="thief-letter" id="letter-6">r</span><span class="thief-letter"
+                        id="letter-7">a</span><span class="thief-letter" id="letter-8">p</span><span
+                        class="thief-letter" id="letter-9">i</span><span class="thief-letter"
+                        id="letter-10">n</span><span class="thief-letter" id="letter-11">g</span>
+                </h1>
+                <h3>Fundamentos y Estrategias</h3>
+                <p style="margin-top: 3rem; font-size: 0.8em;">Presentación técnica</p>
+                <p style="font-size: 0.7em;">Marzo 2026</p>
+            </section>
+
+            <!-- Slide 2: ¿Qué es Web Scraping? -->
+            <section>
+                <h2>¿Qué es Web Scraping?</h2>
+                <p style="font-size: 0.9em; margin-bottom: 2rem;">Extracción automatizada de datos de sitios web</p>
+                <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                    <h4 style="color: #a855f7; margin-bottom: 1rem;">Casos de uso:</h4>
+                    <ul>
+                        <li>Monitoreo de precios y competencia</li>
+                        <li>Investigación académica y análisis de datos</li>
+                        <li>Agregación de contenido (noticias, productos)</li>
+                        <li>Búsqueda de empleo y oportunidades</li>
+                        <li>Análisis de mercado y tendencias</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 3: Fundamentos de la web -->
+            <section>
+                <h2>¿Cómo funciona la web?</h2>
+                <p style="font-size: 0.9em; margin-bottom: 2rem;">El navegador recibe tres tipos principales de
+                    archivos:</p>
+                <div class="comparison" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="comparison-item">
+                        <h4>HTML</h4>
+                        <p>Estructura el contenido</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>CSS</h4>
+                        <p>Define el estilo visual</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>JavaScript</h4>
+                        <p>Añade interactividad</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.8em; margin-top: 2rem; opacity: 0.8;">También: imágenes, fuentes, datos (JSON),
+                    etc.</p>
+            </section>
+
+            <!-- Slide 4: Dos significados de rendering -->
+            <section>
+                <h2>Dos significados de "Rendering"</h2>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h4>Rendering a bajo nivel</h4>
+                        <p style="font-size: 0.85em;">Lo que hace el navegador:</p>
+                        <ul style="font-size: 0.8em; margin-top: 1rem;">
+                            <li>HTML → DOM tree</li>
+                            <li>CSS → CSSOM</li>
+                            <li>Render tree → Layout</li>
+                            <li>Paint → Píxeles en pantalla</li>
+                        </ul>
+                        <p style="font-size: 0.75em; margin-top: 1rem; opacity: 0.7;">Siempre ocurre en el navegador</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Rendering arquitectural</h4>
+                        <p style="font-size: 0.85em;">Lo que nos importa para scraping:</p>
+                        <p style="font-size: 1.1em; margin-top: 1.5rem; color: #a855f7;"><strong>¿Quién construye el
+                                HTML/DOM?</strong></p>
+                        <ul style="font-size: 0.8em; margin-top: 1rem;">
+                            <li>¿El servidor?</li>
+                            <li>¿El navegador (JavaScript)?</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: SSR y Static Sites -->
+            <section>
+                <h2>Server-Side Rendering (SSR) y Static Sites</h2>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h4>SSR</h4>
+                        <ul style="font-size: 0.85em;">
+                            <li>El servidor ejecuta código por cada request</li>
+                            <li>Genera HTML completo con los datos</li>
+                            <li>Ejemplo: Django, PHP, Next.js SSR</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Static / SSG</h4>
+                        <ul style="font-size: 0.85em;">
+                            <li>HTML pre-generado en build time</li>
+                            <li>Servidor solo sirve archivos</li>
+                            <li>Ejemplo: Hugo, Gatsby, Jekyll</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="key-question" style="font-size: 0.7em; margin-top: 2rem;">
+                    Para scraping: Ambos lucen igual → HTML ya contiene los datos
+                </div>
+            </section>
+
+            <!-- Slide 6: CSR -->
+            <section>
+                <h2>Client-Side Rendering (CSR)</h2>
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div class="strategy-box">
+                        <h4>¿Cómo funciona?</h4>
+                        <ul style="font-size: 0.85em;">
+                            <li>Servidor envía HTML "shell" mínimo + bundles de JS</li>
+                            <li>JavaScript en el navegador hace fetch de datos (APIs)</li>
+                            <li>JavaScript construye y actualiza el DOM</li>
+                            <li>HTML inicial está prácticamente vacío</li>
+                        </ul>
+                    </div>
+                    <p style="font-size: 0.85em; margin-top: 2rem;">Ejemplo: React SPA clásico, Vue SPA, Angular SPA</p>
+                    <pre style="margin-top: 1.5rem;"><code class="html">&lt;!-- HTML inicial típico de CSR --&gt;
+&lt;div id="root"&gt;&lt;/div&gt;
+&lt;script src="bundle.js"&gt;&lt;/script&gt;</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 7: La pregunta clave -->
+            <section>
+                <h2>La pregunta clave para scraping</h2>
+                <div class="key-question">
+                    "¿El HTML que descargo ya contiene los datos que necesito?"
+                </div>
+                <div class="comparison" style="margin-top: 2rem;">
+                    <div class="comparison-item">
+                        <h4><span class="checkmark">✓</span> SÍ</h4>
+                        <p style="font-size: 0.85em;">SSR / SSG</p>
+                        <p style="font-size: 0.85em; margin-top: 1rem;">El HTML está completo desde el servidor</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4><span class="crossmark">✗</span> NO</h4>
+                        <p style="font-size: 0.85em;">CSR</p>
+                        <p style="font-size: 0.85em; margin-top: 1rem;">Solo hay un shell + JavaScript</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.9em; margin-top: 2rem; color: #a855f7;"><strong>Esto determina tu estrategia de
+                        scraping</strong></p>
+            </section>
+
+            <!-- Slide 8: Cómo identificar -->
+            <section>
+                <h2>Cómo identificar SSR/SSG vs CSR</h2>
+                <h4 style="color: #a855f7; margin-bottom: 1.5rem;">Tres tests rápidos:</h4>
+                <div class="three-tests">
+                    <div class="test-card">
+                        <h4>1. View Source vs Inspect</h4>
+                        <p style="font-size: 0.75em;">• View Source = HTML del servidor</p>
+                        <p style="font-size: 0.75em;">• Inspect = DOM después de JS</p>
+                        <p style="font-size: 0.75em; margin-top: 0.5rem; color: #10b981;">¿Datos en View Source? →
+                            SSR/SSG</p>
+                    </div>
+                    <div class="test-card">
+                        <h4>2. Curl / requests</h4>
+                        <p style="font-size: 0.75em;">• <code>curl https://sitio.com</code></p>
+                        <p style="font-size: 0.75em; margin-top: 0.5rem; color: #10b981;">¿Respuesta tiene contenido? →
+                            SSR/SSG</p>
+                        <p style="font-size: 0.75em; color: #ef4444;">¿Solo &lt;div id="root"&gt;? → CSR</p>
+                    </div>
+                    <div class="test-card">
+                        <h4>3. Desactivar JavaScript</h4>
+                        <p style="font-size: 0.75em;">• Desactivar JS en el navegador</p>
+                        <p style="font-size: 0.75em;">• Recargar la página</p>
+                        <p style="font-size: 0.75em; margin-top: 0.5rem; color: #10b981;">¿Visible? → SSR/SSG</p>
+                        <p style="font-size: 0.75em; color: #ef4444;">¿En blanco? → CSR</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Tres estrategias -->
+            <section>
+                <h2>Tres estrategias de scraping</h2>
+                <div style="max-width: 900px; margin: 0 auto;">
+                    <div class="strategy-box">
+                        <h4>1. HTML + DOM Parsing</h4>
+                        <p style="font-size: 0.8em;"><strong>Cuándo:</strong> HTML ya tiene los datos</p>
+                        <p style="font-size: 0.8em;"><strong>Herramientas:</strong> requests + BeautifulSoup, lxml,
+                            Cheerio</p>
+                    </div>
+                    <div class="strategy-box">
+                        <h4>2. API Scraping</h4>
+                        <p style="font-size: 0.8em;"><strong>Cuándo:</strong> Página usa CSR + AJAX/fetch</p>
+                        <p style="font-size: 0.8em;"><strong>Método:</strong> DevTools → Network tab → llamar APIs
+                            directamente</p>
+                    </div>
+                    <div class="strategy-box">
+                        <h4>3. Headless Browser</h4>
+                        <p style="font-size: 0.8em;"><strong>Cuándo:</strong> JS complejo, auth, anti-bot</p>
+                        <p style="font-size: 0.8em;"><strong>Herramientas:</strong> Selenium, Playwright, Puppeteer</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Estrategia 1 -->
+            <section>
+                <h2>Estrategia 1: HTML Parsing</h2>
+                <div style="text-align: left; max-width: 900px; margin: 0 auto;">
+                    <div class="strategy-box">
+                        <h4>Cuándo usarla:</h4>
+                        <ul style="font-size: 0.85em;">
+                            <li>View Source muestra los datos</li>
+                            <li>SSR, SSG, o páginas tradicionales</li>
+                        </ul>
+                    </div>
+                    <h4 style="color: #a855f7; margin-top: 1.5rem; margin-bottom: 1rem;">Proceso:</h4>
+                    <ol style="font-size: 0.85em;">
+                        <li>Hacer HTTP request (<code>requests.get()</code>)</li>
+                        <li>Parsear HTML (BeautifulSoup/lxml)</li>
+                        <li>Extraer elementos con selectores CSS o XPath</li>
+                    </ol>
+                </div>
+                <pre style="margin-top: 1.5rem;"><code class="python">import requests
+from bs4 import BeautifulSoup
+
+response = requests.get('https://ejemplo.com')
+soup = BeautifulSoup(response.text, 'html.parser')
+productos = soup.find_all('div', class_='producto')</code></pre>
+            </section>
+
+            <!-- Slide 11: Estrategia 2 -->
+            <section>
+                <h2>Estrategia 2: API Scraping</h2>
+                <div style="text-align: left; max-width: 900px; margin: 0 auto;">
+                    <div class="strategy-box">
+                        <h4>Cuándo usarla:</h4>
+                        <ul style="font-size: 0.85em;">
+                            <li>Página usa CSR</li>
+                            <li>DevTools muestra llamadas XHR/fetch con JSON</li>
+                        </ul>
+                    </div>
+                    <h4 style="color: #a855f7; margin-top: 1.5rem; margin-bottom: 1rem;">Proceso:</h4>
+                    <ol style="font-size: 0.85em;">
+                        <li>Abrir DevTools → Network tab</li>
+                        <li>Identificar endpoints que retornan datos</li>
+                        <li>Replicar esos requests en tu código</li>
+                        <li>Parsear JSON directamente</li>
+                    </ol>
+                    <h4 style="color: #10b981; margin-top: 1.5rem; font-size: 0.9em;">Ventajas:</h4>
+                    <ul style="font-size: 0.8em;">
+                        <li>Más limpio que parsear HTML</li>
+                        <li>Más rápido (no necesitas el DOM)</li>
+                        <li>Datos ya estructurados</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 12: Estrategia 3 -->
+            <section>
+                <h2>Estrategia 3: Headless Browser</h2>
+                <div style="text-align: left; max-width: 900px; margin: 0 auto;">
+                    <div class="strategy-box">
+                        <h4>Cuándo usarla:</h4>
+                        <ul style="font-size: 0.85em;">
+                            <li>No encuentras las APIs fácilmente</li>
+                            <li>Página tiene anti-bot, CAPTCHA</li>
+                            <li>Requiere interacciones complejas (login, clicks, scroll)</li>
+                        </ul>
+                    </div>
+                    <h4 style="color: #a855f7; margin-top: 1.5rem; margin-bottom: 1rem;">Proceso:</h4>
+                    <ol style="font-size: 0.85em;">
+                        <li>Automatizar navegador (Selenium/Playwright)</li>
+                        <li>Cargar página, esperar a que JS ejecute</li>
+                        <li>Interactuar si es necesario</li>
+                        <li>Leer el DOM resultante</li>
+                    </ol>
+                    <p style="font-size: 0.85em; margin-top: 1.5rem; color: #ef4444;"><strong>Tradeoff:</strong> Más
+                        lento y consume más recursos, pero más robusto</p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Comparación -->
+            <section>
+                <h2>Comparación de estrategias</h2>
+                <table style="width: 100%; font-size: 0.7em;">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>HTML Parsing</th>
+                            <th>API Scraping</th>
+                            <th>Headless Browser</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Velocidad</strong></td>
+                            <td><span class="emoji-large">⚡⚡⚡</span> Rápido</td>
+                            <td><span class="emoji-large">⚡⚡⚡</span> Rápido</td>
+                            <td><span class="emoji-large">⚡</span> Lento</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complejidad</strong></td>
+                            <td>🟢 Simple</td>
+                            <td>🟡 Media</td>
+                            <td>🔴 Alta</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Casos de uso</strong></td>
+                            <td>SSR/SSG</td>
+                            <td>CSR con APIs visibles</td>
+                            <td>CSR complejo, anti-bot</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Recursos</strong></td>
+                            <td>Bajo</td>
+                            <td>Bajo</td>
+                            <td>Alto (CPU, memoria)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mantenimiento</strong></td>
+                            <td>Medio (cambios en HTML)</td>
+                            <td>Bajo (APIs estables)</td>
+                            <td>Alto (cambios frecuentes)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Slide 14: Consideraciones prácticas -->
+            <section>
+                <h2>Consideraciones prácticas</h2>
+                <div style="max-width: 900px; margin: 0 auto; text-align: left;">
+                    <div class="strategy-box">
+                        <h4>Ética y legalidad</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>Respetar robots.txt</li>
+                            <li>Leer y seguir los Terms of Service (ToS)</li>
+                            <li>Considerar aspectos legales por país/región</li>
+                        </ul>
+                    </div>
+                    <div class="strategy-box">
+                        <h4>Aspectos técnicos</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>Rate limiting: no sobrecargar servidores</li>
+                            <li>Manejo de paginación e infinite scroll</li>
+                            <li>Rotación de IPs/headers para evitar bloqueos</li>
+                            <li>Validación y manejo de errores (páginas cambian)</li>
+                            <li>User-Agent apropiado</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 15: Ecosistema de herramientas -->
+            <section>
+                <h2>Ecosistema de herramientas</h2>
+                <div class="tools-grid">
+                    <div class="tool-category">
+                        <h4>🐍 Python</h4>
+                        <p style="font-size: 0.8em; margin-bottom: 0.5rem;"><strong>HTTP clients:</strong></p>
+                        <p style="font-size: 0.75em;">requests, httpx</p>
+                        <p style="font-size: 0.8em; margin-bottom: 0.5rem; margin-top: 1rem;"><strong>HTML
+                                parsing:</strong></p>
+                        <p style="font-size: 0.75em;">BeautifulSoup, lxml</p>
+                        <p style="font-size: 0.8em; margin-bottom: 0.5rem; margin-top: 1rem;"><strong>Framework
+                                completo:</strong></p>
+                        <p style="font-size: 0.75em;">Scrapy</p>
+                        <p style="font-size: 0.8em; margin-bottom: 0.5rem; margin-top: 1rem;"><strong>Browsers:</strong>
+                        </p>
+                        <p style="font-size: 0.75em;">Selenium, Playwright</p>
+                    </div>
+                    <div class="tool-category">
+                        <h4>🟨 JavaScript</h4>
+                        <p style="font-size: 0.8em; margin-bottom: 0.5rem;"><strong>HTTP clients:</strong></p>
+                        <p style="font-size: 0.75em;">axios, node-fetch</p>
+                        <p style="font-size: 0.8em; margin-bottom: 0.5rem; margin-top: 1rem;"><strong>HTML/DOM
+                                parsing:</strong></p>
+                        <p style="font-size: 0.75em;">Cheerio, jsdom</p>
+                        <p style="font-size: 0.8em; margin-bottom: 0.5rem; margin-top: 1rem;"><strong>Browsers:</strong>
+                        </p>
+                        <p style="font-size: 0.75em;">Puppeteer, Playwright</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 16: Ejemplo de código -->
+            <section>
+                <h2>Ejemplo de código</h2>
+                <p style="font-size: 0.85em; margin-bottom: 1.5rem;">Scraper simple con BeautifulSoup</p>
+                <pre><code class="python">import requests
+from bs4 import BeautifulSoup
+
+# 1. Obtener HTML
+url = 'https://ejemplo.com/productos'
+response = requests.get(url)
+
+# 2. Parsear
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# 3. Extraer datos
+for producto in soup.find_all('div', class_='producto'):
+    nombre = producto.find('h2', class_='titulo').text
+    precio = producto.find('span', class_='precio').text
+    print(f"{nombre}: {precio}")</code></pre>
+            </section>
+
+            <!-- Slide 17: Flujo de decisión -->
+            <section>
+                <h2>Flujo de decisión</h2>
+                <div class="flowchart">
+                    <pre
+                        style="background: none; box-shadow: none; font-size: 0.7em; color: #e5e7eb; line-height: 1.8;">
+¿Necesitas hacer scraping?
+    ↓
+¿HTML ya tiene los datos?
+(curl / View Source)
+    ↓
+    ├─ SÍ → <span style="color: #10b981;">Usar HTML Parsing ✓</span>
+    │         (requests + BeautifulSoup)
+    │
+    └─ NO → ¿Puedes encontrar APIs en Network tab?
+            ↓
+            ├─ SÍ → <span style="color: #10b981;">Usar API Scraping ✓</span>
+            │         (llamar endpoints directamente)
+            │
+            └─ NO → <span style="color: #fbbf24;">Usar Headless Browser</span>
+                      (Selenium / Playwright)
+                    </pre>
+                </div>
+            </section>
+
+            <!-- Slide 18: Recap -->
+            <section>
+                <h2>Puntos clave</h2>
+                <div style="max-width: 900px; margin: 0 auto; text-align: left;">
+                    <h4 style="color: #a855f7; margin-bottom: 1rem;">Lo que aprendimos:</h4>
+                    <ol style="font-size: 0.9em; line-height: 1.8;">
+                        <li>Diferencia entre SSR/SSG y CSR</li>
+                        <li>Cómo identificarlos (View Source, curl, disable JS)</li>
+                        <li>Tres estrategias de scraping según el tipo de página</li>
+                        <li>Elegir la herramienta correcta para cada caso</li>
+                        <li>Consideraciones éticas y técnicas</li>
+                    </ol>
+                    <div class="key-question" style="font-size: 0.8em; margin-top: 2rem;">
+                        Regla de oro: Entender cómo se construye la página → elegir la estrategia correcta
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 19: Recursos adicionales -->
+            <section>
+                <h2>Recursos adicionales</h2>
+                <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+                    <div class="strategy-box">
+                        <h4>Documentación oficial</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>BeautifulSoup: crummy.com/software/BeautifulSoup</li>
+                            <li>Scrapy: scrapy.org</li>
+                            <li>Playwright: playwright.dev</li>
+                            <li>Selenium: selenium.dev</li>
+                        </ul>
+                    </div>
+                    <div class="strategy-box">
+                        <h4>Comunidades</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>r/webscraping (Reddit)</li>
+                            <li>Stack Overflow</li>
+                            <li>GitHub discussions</li>
+                        </ul>
+                    </div>
+                    <p style="font-size: 0.8em; margin-top: 1.5rem; opacity: 0.8;">Nota: Siempre verificar
+                        consideraciones legales específicas por país/región</p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Preguntas -->
+            <section>
+                <h1>¿Preguntas?</h1>
+                <p style="font-size: 1.2em; margin-top: 3rem;">Gracias por su atención</p>
+                <p style="font-size: 0.8em; margin-top: 3rem; opacity: 0.7;">Esta presentación cubre los fundamentos de
+                    web scraping<br>y las estrategias para diferentes tipos de arquitecturas web</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
